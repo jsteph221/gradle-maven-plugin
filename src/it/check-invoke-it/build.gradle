@@ -1,8 +1,10 @@
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: 'java'
 
 
 
-task doIt << {
-	throw new GradleException("forced failure")
+task doIt {
+    doLast {
+        throw new GradleException("forced failure")
+    }
 }

@@ -14,9 +14,14 @@
 
 package org.fortasoft.maven.plugin.gradle;
 
+import groovy.lang.Binding;
+import groovy.lang.GroovyShell;
+import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.gradle.tooling.BuildLauncher;
 import org.gradle.tooling.GradleConnectionException;
 import org.gradle.tooling.GradleConnector;
@@ -24,33 +29,20 @@ import org.gradle.tooling.ProgressEvent;
 import org.gradle.tooling.ProgressListener;
 import org.gradle.tooling.ProjectConnection;
 import org.gradle.tooling.ResultHandler;
-import org.slf4j.impl.MavenLogWrapper;
 import org.slf4j.impl.NewMojoLogger;
 
-import groovy.lang.Binding;
-import groovy.lang.GroovyShell;
-
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
-
-import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.plugins.annotations.Mojo;
-
-import org.apache.maven.execution.MavenSession;
 
 /**
  * Goal which invokes gradle!
  * 
  */
-@Mojo(name="invoke")
+@Mojo(name="invoke", threadSafe = true)
 public class GradleMojo extends AbstractMojo {
 
 	/**
@@ -65,7 +57,7 @@ public class GradleMojo extends AbstractMojo {
 	*/
 	public static final String SYS_PREFIX = "gradle.sys.";
 
-	@Parameter(defaultValue="6.3", required=true)
+	@Parameter(defaultValue="7.1.1", required=true)
 	private String gradleVersion;
 
 
